@@ -1,0 +1,16 @@
+{
+  "name": "iitbchart",
+  "version": "1.0.0",
+  "description": "IITB costing api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gccode.ssc-spc.gc.ca/0cnLaroche/iitbchart.git"
+  },
+  "author": "Samuel Laroche",
+  "license": "ISC"
+}
