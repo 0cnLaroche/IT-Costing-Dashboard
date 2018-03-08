@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!--Notes
+************************************
+HTML Chart Presentation Template
+v0.1
+Uses chart.js libraries
+Samuel Laroche - IITB
+19/02/2018
+************************************
+-->
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>IITB: Costing chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        #chart {
+            height: 400px;
+            width: 1000px;
+        }
+
+        .container {
+            height: 400px;
+            width: 1000px;
+            padding: 30px;
+            /*FOR TESTING*/
+            background: white;
+        }
+
+            .container h2 {
+                text-align: center;
+                font-family: Tahoma;
+                padding: : 20px;
+            }
+
+        img.ribbon {
+            height: 100px;
+            opacity: 0.75;
+            padding: 0px;
+            /*z-index: -1;*/
+        }
+
+        #top.ribbon {
+            margin-bottom: -30px;
+            transform: scalex(-1);
+        }
+
+        #bottom.ribbon {
+            margin-bottom: -5px;
+            margin-top: -10px;
+            transform: scaleX(-1);
+        }
+
+        .header {
+            text-align: left;
+            background: white;
+            /*FOR TESTING ONLY*/
+        }
+
+        .footer {
+            width: 100%;
+            text-align: right;
+            position: absolute;
+            bottom: 0px;
+            z-index: -1;
+            /*background: white;*/
+            /*FOR TESTING ONLY*/
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img id="top" class="ribbon" src="http://dialogue/grp/SFI-IFS/Style%20Library/top-right.png">
+    </div>
+    <div class="container">
+        <canvas id="chart"></canvas>
+    </div>
+    <div class="footer">
+        <img id="bottom" class="ribbon" src="http://dialogue/grp/SFI-IFS/Style%20Library/buttom-left.png">
+    </div>
+</body>
+</html><script type='text/javascript'> var DATA = {
+  "desc": "IRIS - Canada Student Loans Program",
+  "labels": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019
+  ],
+  "datasets": [
+    {
+      "label": "Salaries",
+      "data": [
+        0,
+        0,
+        "599.8308",
+        "609.2731",
+        0
+      ]
+    }
+  ]
+}</script>
+<script type='text/javascript'>//Set theme colors here
+var mycolor = [
+        "#b1d000", //Green
+        '#2eafde', //Light blue
+        "#3b4652", //Dark gray
+        "#d22239", //Red
+        '#003f7e', //Dark blue
+        "#ff5722" //Orange
+];
+function setStyle() {
+    for (i = 0; i < DATA["datasets"].length; i++) {
+        DATA["datasets"][i]['backgroundColor'] = mycolor[i];
+        DATA["datasets"][i]['borderWidth'] = 1;
+        DATA["datasets"][i]['borderColor'] = 'white';
+    }
+
+}
+setStyle();
+
+var ctx = document.getElementById("chart");
+var stackedBar = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: DATA['labels'],
+        datasets: DATA['datasets']
+    },
+    options: {
+        scales: { //Enables Stacked bars
+            xAxes: [{
+                distribution: 'series',
+                stacked: true
+            }],
+            yAxes: [{
+                stacked: true,
+                ticks: {
+                    callback: function (value, index, values) {
+                        return '$' + value;
+                    }
+                }
+            }]
+        },
+        title: {
+            display: true,
+            text: DATA['desc'],
+            fontSize: 25
+        }
+    }
+})
+
+</script>
