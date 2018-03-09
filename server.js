@@ -56,7 +56,7 @@ app.get('/project', function(req, res){
       })
 
     } else {
-        fs.readFile("projet.html", 'utf8', function(err,content){
+        fs.readFile("project.html", 'utf8', function(err,content){
           res.send(content);
         })
       }
