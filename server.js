@@ -10,6 +10,14 @@ app.use(bodyParser.json());
 
 const $PORT = process.env.port || 8080;
 
+//To use static assets directories
+app.use(express.static('css'));
+app.use(express.static('js'));
+app.use(express.static('images'));
+
+app.use(express.static('json')); // To remove once mySQL is setup
+app.use(express.static('res'));
+
 app.get('/', function(req,res){
 
     fs.readFile('index.html', 'utf8', function(err,content){
