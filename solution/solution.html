@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IITB Chart</title>
+  <script
+  			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  			  crossorigin="anonymous">
+  </script>
+  <script>
+  //To retrive the list of projects
+  $.getJSON('/solution/index', function(data){
+    for (var i = 0; i < data.length; i++){
+      $('#solution').append('<option value=' + data[i]['ID'] + '>'+ data[i]['Name'] + '</option>');
+    }
+  })
+  </script>
+</head>
+<body>
+<h3>Select Solution</h3>
+<form action='/solution/chart' method="get">
+    <select id="solution" name="id"></select>
+    <select id="report" name="report">
+      <option value="yearly">Yearly</option>
+    </select>
+    <input type='submit' value='Submit'/>
+</form>
+<a href="/">home</a>
+</body>
+</html>

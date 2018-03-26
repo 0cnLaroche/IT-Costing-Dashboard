@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IITB Chart</title>
+  <script
+  			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  			  crossorigin="anonymous">
+  </script>
+  <script>
+  //To retrive the list of projects
+  $.getJSON('/project/index', function(data){
+    for (var i = 0; i < data.length; i++){
+      $('#project').append('<option value=' + data[i]['ID'] + '>'+ data[i]['Name'] + '</option>');
+    }
+  })
+  </script>
+</head>
+<body>
+<h3>Select project</h3>
+<form action="project/chart" method="get">
+    <select id='project' name='id'></select>
+    <select id='' name="fiscalyear">
+        <option value="2018">current</option>
+        <option value="2017" disabled >2017</option>
+        <option value="2017" disabled >2016</option>
+    </select>
+    <input type='submit' value='Submit'/>
+</form>
+<a href="/">home</a>
+</body>
+</html>

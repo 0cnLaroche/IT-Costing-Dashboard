@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!--Notes
+************************************
+HTML Chart Presentation Template
+v0.1
+Uses chart.js libraries
+Samuel Laroche - IITB
+19/02/2018
+************************************
+-->
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>IITB: Costing chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        #chart {
+            height: 400px;
+            width: 1000px;
+        }
+
+        .container {
+            height: 400px;
+            width: 1000px;
+            padding: 30px;
+            /*FOR TESTING*/
+            background: white;
+        }
+
+            .container h2 {
+                text-align: center;
+                font-family: Tahoma;
+                padding: : 20px;
+            }
+
+        img.ribbon {
+            height: 100px;
+            opacity: 0.75;
+            padding: 0px;
+            /*z-index: -1;*/
+        }
+
+        #top.ribbon {
+            margin-bottom: -30px;
+            transform: scalex(-1);
+        }
+
+        #bottom.ribbon {
+            margin-bottom: -5px;
+            margin-top: -10px;
+            transform: scaleX(-1);
+        }
+
+        .header {
+            text-align: left;
+            background: white;
+            /*FOR TESTING ONLY*/
+        }
+
+        .footer {
+            width: 100%;
+            text-align: right;
+            position: absolute;
+            bottom: 0px;
+            z-index: -1;
+            /*background: white;*/
+            /*FOR TESTING ONLY*/
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img id="top" class="ribbon" src="http://dialogue/grp/SFI-IFS/Style%20Library/top-right.png">
+    </div>
+    <div class="container">
+        <canvas id="chart"></canvas>
+    </div>
+    <div class="footer">
+        <img id="bottom" class="ribbon" src="http://dialogue/grp/SFI-IFS/Style%20Library/buttom-left.png">
+    </div>
+</body>
+</html><script type='text/javascript'> var DATA = {
+  "desc": "CRA-ESDC Tell-Us-Once",
+  "labels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "datasets": [
+    {
+      "label": "Analyse",
+      "data": [
+        7325,
+        8599,
+        6039,
+        490,
+        242,
+        1026,
+        329,
+        754,
+        769,
+        4169,
+        3537,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "Plan",
+      "data": [
+        852,
+        2194,
+        5090,
+        4823,
+        11477,
+        5224,
+        4407,
+        14336,
+        2235,
+        3163,
+        2817,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "Design",
+      "data": [
+        2624,
+        23610,
+        34953,
+        29032,
+        28723,
+        18278,
+        26347,
+        6290,
+        5081,
+        1194,
+        5922,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "Build",
+      "data": [
+        10848,
+        37773,
+        44820,
+        44080,
+        40851,
+        39924,
+        43777,
+        11770,
+        19742,
+        122427,
+        2262,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "Test",
+      "data": [
+        3347,
+        5932,
+        3269,
+        22586,
+        34969,
+        10904,
+        118591,
+        23913,
+        67049,
+        385,
+        8553,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "Deploy",
+      "data": [
+        0,
+        0,
+        0,
+        485,
+        0,
+        115,
+        0,
+        613,
+        6924,
+        343,
+        1905,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "Project Management",
+      "data": [
+        14380,
+        28612,
+        18260,
+        34667,
+        10115,
+        10764,
+        44202,
+        44449,
+        21609,
+        19806,
+        13212,
+        0,
+        0
+      ]
+    }
+  ]
+}</script>
+<script type='text/javascript'>//Set theme colors here
+var mycolor = [
+        "#ECDB54", //yellow
+        '#e94b3c', //red
+        "#6f9fd8", //blue
+        '#944743', //Brown
+        "#00a591", //turquoise
+        '#6b5b95', //purple
+        "#bfd641", //lime
+        '#bc70a4' //ligth pink
+];
+/*
+Keeping those for later
+var mycolor = [
+        "#b1d000", //Green
+        '#2eafde', //Light blue
+        "#3b4652", //Dark gray
+        "#d22239", //Red
+        '#003f7e', //Dark blue
+        "#ff5722", //Orange
+        "#cc0099" //Purple
+];*/
+
+function setStyle() {
+
+    var bkdcolor;
+
+    for (i = 0; i < DATA["datasets"].length; i++) {
+
+      switch (DATA['datasets'][i]['label']) { // Predefined label colors should be added here
+        case 'Analyse':
+          bkdcolor = "#ECDB54" //yellow
+          break;
+        case 'Build':
+          bkdcolor = '#e94b3c' //red
+          break;
+        case 'Design':
+          bkdcolor = "#6f9fd8" //blue
+          break;
+        case 'Deploy':
+          bkdcolor = '#944743' //Brown
+          break;
+        case 'Plan':
+          bkdcolor = "#00a591" //turquoise
+          break;
+        case 'Project Management':
+          bkdcolor = '#6b5b95' //purple
+          break;
+        case 'Test':
+          bkdcolor = "#bfd641" //lime
+          break;
+        default:
+        bkdcolor = mycolor[i];
+      }
+        DATA["datasets"][i]['backgroundColor'] = bkdcolor;
+        DATA["datasets"][i]['borderWidth'] = 1;
+        DATA["datasets"][i]['borderColor'] = 'white';
+    }
+    //Last modified 09/03/2018
+}
+setStyle();
+
+var ctx = document.getElementById("chart");
+var stackedBar = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: DATA['labels'],
+        datasets: DATA['datasets']
+    },
+    options: {
+        scales: { //Enables Stacked bars
+            xAxes: [{
+                distribution: 'series',
+                stacked: true
+            }],
+            yAxes: [{
+                stacked: true,
+                ticks: {
+                    callback: function (value, index, values) {
+                        return '$' + value;
+                    }
+                }
+            }]
+        },
+        title: {
+            display: true,
+            text: DATA['desc'],
+            fontSize: 25
+        }
+    }
+})
+</script>

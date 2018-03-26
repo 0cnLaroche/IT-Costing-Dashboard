@@ -1,27 +1,28 @@
-var json;
-var html;
+var getTable = function(data){
 
-$.getJSON('I-0077.json', function(data) {
+  if (data){
+    var html;
+    var total = 0;
+    items = [];
 
-var total = 0;
+    items.push("<table><tr>");
 
-json = data;
+    for (var i = 0; i < data.length; i++){
+      items.push('<th>' + data[i].Category + '</th>');
+    }
+    items.push('<th>Total</th></tr>');
+    for(var i = 0; i < data.length; i++){
+      let formatted = new Intl.NumberFormat('en-CA').format(parseInt(data[i].Amount));
+      items.push('<td>' + '$ ' + formatted + '</td>');
+      total += parseInt(data[i].Amount);
+    }
+    let formatted = new Intl.NumberFormat('en-CA').format(parseInt(total));
+    items.push('<td>' + '$ ' + formatted + '</td></tr></table');
 
-items = [];
-items.push("<table><tr>");
+    html = items.join("");
+    $('#tab').append(html);
 
-$.each(data, function(key,val) {
-  items.push('<th>' + key + '</th>');
-})
-items.push('<th>Total</th></tr>');
-
-$.each(data, function(key,val) {
-  items.push('<td>' + '$ ' + parseInt(val).toLocaleString('currency') + '</td>');
-  total += parseInt(val);
-})
-items.push('<td>' + '$ ' + total.toLocaleString('currency') + '</td></tr></table');
-
-html = items.join("");
-$('#tab').append(html);
-
-});
+  } else {
+    $('#tab').append('no data available');
+  }
+}

@@ -1,0 +1,68 @@
+body {
+    margin: 0px;
+}
+
+#chart {
+    height: 400px;
+    width: 1000px;
+}
+
+.chartcontainer {
+    width: 1000px;
+    padding: 30px;
+    /*FOR TESTING*/
+    background: white;
+}
+
+.chartcontainer h2 {
+    text-align: center;
+    font-family: Tahoma;
+    padding: 20px;
+}
+
+.tabcontainer {
+  padding: 30px;
+  background-color: white;
+}
+
+img.ribbon {
+    position: absolute;
+    height: 100px;
+    opacity: 0.75;
+    padding: 0px;
+    /*z-index: -1;*/
+}
+
+#top.ribbon {
+    margin-bottom: -30px;
+    transform: scalex(-1);
+}
+
+#bottom.ribbon {
+    margin-bottom: -5px;
+    margin-top: -10px;
+    transform: scaleX(-1);
+}
+
+.header {
+    text-align: left;
+    background: white;
+    /*FOR TESTING ONLY*/
+}
+
+.footer {
+    width: 100%;
+    text-align: right;
+    z-index: -1;
+    /*background: white;*/
+    /*FOR TESTING ONLY*/
+}
+table {
+  border-collapse: collapse;
+}
+td, th {
+  padding: 10px;
+  border: 1px solid #787878;
+  text-align: right;
+  width: 100px;
+}
