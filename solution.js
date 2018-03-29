@@ -29,7 +29,7 @@ router.get('/chart', function (req, res){
   var id = req.query.id;
   var report = '' + req.query.report
   var chartjson;
-  if (id || report) { //Return chart if both fields are filled, otherwise return menu
+  if (id && report) { //Return chart if both fields are filled, otherwise return menu
       api = '/solution/api?id=' + id  + '&report=' + report;
       getdata(id, report, function(err, data){
         if (err){
