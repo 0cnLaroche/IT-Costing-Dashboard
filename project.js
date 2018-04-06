@@ -25,21 +25,21 @@ router.get('/', function (req, res){
 })
 
 router.get('/chart', function (req, res){
-  var options;
-  var fy = req.query.fiscalyear
-  var id = new String(req.query.id);
-  var report = new String(req.query.report);
+  var options = {'query': {}};
+  var fy = parseInt(req.query.fiscalyear);
+  var id = req.query.id;
+  var report = req.query.report;
   var chartjson, clientscript;
 
   switch(report){
     case 'yearly':
       break;
     case 'period':
-      options.report = 'period';
-      options.query.name = 'projectPeriod';
-      options.domain = 'period';
-      options.query.param = [fy];
-      options.summary = true;
+      options['report'] = 'period';
+      options['query']['name'] = 'projectPeriod';
+      options['domain'] = 'period';
+      options['query']['param'] = [id,fy];
+      options['summary'] = true;
       break;
     case 'table':
       options.report = 'table';
@@ -53,21 +53,22 @@ router.get('/chart', function (req, res){
       //api = '/solution/api?id=' + id  + '&report=' + report;
       getdata(id, options, function(err, data){
         if (err){
-          console.err(err.stack);
+          console.error(err.stack);
         } else {
-          chartjson = JSON.stringify(barchart(data));
-          clientscript = 'loadChart(' + chartjson + ');'
+          chartjson = JSON.stringify(barchart(data, options));
+          clientscript = 'loadChart(' + chartjson + ');';
 
           if (options.summary == true){ //Dans le cas ou le rapport est period, on veut aussi voir une table sommaire en bas
-            getdata(id, {report:'table', query:{name: 'projectSummary'}}, function(err, data){
+            getdata(id, {'report':'table','query':{'name': 'projectSummary','param': [id,fy]}}, function(err, data){
               if(err){
                 console.error(err.stack);
               } else {
-                  clientscript += '\n getTable(' + JSON.stringify(data) + ');'
+                  res.render('chart', {script: clientscript + 'getTable(' + JSON.stringify(data) + ');'});
               }
             })
-          }
+          } else {
           res.render('chart', {script: clientscript}); //Transmet le template HTML avec les scripts du client
+          }
         }
       })
     }
@@ -84,12 +85,14 @@ router.get('/index', function(req, res){
 var getdata = function(id, options, callback){
   var query = options.query.name;
   var param = options.query.param;
+  console.log(options);
 
     fs.readFile('sql/' + query + '.sql', 'utf8', function(err, content){
       if (err){
         console.error(err.stack);
       } else {
-        connection.query(content, param, function(err, results, fields) {
+        var sql = mysql.format(content, param);
+        connection.query(sql, function(err, results, fields) {
           if (err) {
             callback(err, null);
           } else {
@@ -124,20 +127,20 @@ var barchart = function(data, options){
   //2- Ajouter le titre et le domaine
   if(data[0]){
 
-  json['title'] = data[0]['Name'];
+  json['title'] = data[0]['Context'];
   json['labels'] = domain;
   json['datasets'] = [];
 
   for (var i = 0; i < data.length; i++){
 
-    if (data[i].Label != set.label) { //On a trouvé une nouvelle categorie donc on ajoute le nom
+    if (data[i].Name != set.label) { //On a trouvé une nouvelle categorie donc on ajoute le nom
       if (set['label']){ // Pour s'assurer qu'on ajoute pas un set vide
         set['data'] = y; // On ajoute l'image
         json['datasets'].push(set); // Il faut ajouter le set au datasets du json si déjà initialisé
       }
       set = {}; //On initialise un nouveau set (categorie)
       y = [];
-      set['label'] = data[i].Label
+      set['label'] = data[i].Name
 
       for (var j = 0; j < domain.length; j++){ //On réinitialise l'image à zéro
         y.push(0);
