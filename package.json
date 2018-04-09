@@ -11,6 +11,14 @@
     "type": "git",
     "url": "https://gccode.ssc-spc.gc.ca/0cnLaroche/iitbchart.git"
   },
+  "dependencies": {
+    "body-parser": "*",
+    "express": "^4.16.3",
+    "fs": "0.0.2",
+    "mysql": "*",
+    "querystring": "*",
+    "url": "*"
+  },
   "author": "Samuel Laroche",
   "license": "ISC"
 }
