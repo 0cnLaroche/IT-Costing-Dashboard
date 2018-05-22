@@ -16,6 +16,7 @@
     "express": "^4.16.3",
     "fs": "0.0.2",
     "mysql": "*",
+    "oledb": "^1.5.2",
     "querystring": "*",
     "url": "*"
   },
