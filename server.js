@@ -6,6 +6,7 @@ var fs = require('fs');
 
 var project = require('./project');
 var solution = require('./solution');
+var api = require('./api');
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -46,6 +47,7 @@ app.get('/', function(req,res){
 
 app.use('/project', project);
 app.use('/solution', solution);
+app.use('/api', api);
 
 app.listen($PORT, function(){
     console.log('Server listening on port ' + $PORT);

@@ -47,6 +47,7 @@ img.ribbon {
 .header {
     text-align: left;
     background: white;
+    z-index: -1;
     /*FOR TESTING ONLY*/
 }
 
