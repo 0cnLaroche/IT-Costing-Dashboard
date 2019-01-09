@@ -5,7 +5,7 @@ var querystring = require('querystring');
 var router = express.Router();
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'webadmin',
+  user: 'firstuser',
   password: 'Pa$$w0rd',
   database: 'costing'
 });
