@@ -5,8 +5,8 @@ var querystring = require('querystring');
 var router = express.Router();
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'firstuser',
-  password: 'Pa$$w0rd',
+  user: 'iitbchart',
+  password: 'P@$$w0rd',
   database: 'costing'
 });
 
