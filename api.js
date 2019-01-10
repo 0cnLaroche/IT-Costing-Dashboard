@@ -21,18 +21,30 @@ connection.connect(function(err){
 
 router.get('/run', function(req, res){
   connection.query('SELECT ID, Name FROM RUN ORDER BY ID WHERE ClosingDate IS NULL;', function(err,results,fields){
+    if (err) {
+      console.error('error on run query: ' + err.stack);
+      return;
+    }
     res.json(results);
   })
 })
 
 router.get('/project', function(req, res){
   connection.query('SELECT ID, Name FROM Network ORDER BY ID WHERE ClosingDate IS NULL;', function(err,results,fields){
+    if (err) {
+      console.error('error on run query: ' + err.stack);
+      return;
+    }
     res.json(results);
   })
 })
 
 router.get('/costcenter', function(req, res){
   connection.query('SELECT ID, Name, Manager FROM CostCenter ORDER BY ID WHERE ClosingDate IS NULL;', function(err,results,fields){
+    if (err) {
+      console.error('error on run query: ' + err.stack);
+      return;
+    }
     res.json(results);
   })
 })
